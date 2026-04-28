@@ -5,6 +5,7 @@ import com.himusharier.payment_service.repository.PaymentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Random;
 import java.util.UUID;
 
 @Service
@@ -13,7 +14,12 @@ public class PaymentService {
     private PaymentRepository repository;
 
     public Payment doPayment(Payment payment) {
+        payment.setTransactionId(paymentProcessing());
         payment.setTransactionId(UUID.randomUUID().toString());
         return repository.save(payment);
+    }
+
+    public String paymentProcessing() {
+        return new Random().nextBoolean() ? "success" : "false";
     }
 }

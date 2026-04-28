@@ -18,7 +18,9 @@ import lombok.Setter;
 public class Payment {
     @Id
     @GeneratedValue
-    private int paymentId;
+    private Integer paymentId;
     private String paymentStatus;
     private String transactionId;
+    private Integer orderId;
+    private Double amount;
 }
