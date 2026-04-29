@@ -14,12 +14,16 @@ public class PaymentService {
     private PaymentRepository repository;
 
     public Payment doPayment(Payment payment) {
-        payment.setTransactionId(paymentProcessing());
+        payment.setPaymentStatus(paymentProcessing());
         payment.setTransactionId(UUID.randomUUID().toString());
         return repository.save(payment);
     }
 
     public String paymentProcessing() {
         return new Random().nextBoolean() ? "success" : "false";
+    }
+
+    public Payment findPaymentHistoryByOrderId(Integer orderId) {
+        return repository.findByOrderId(orderId);
     }
 }

@@ -1,9 +1,7 @@
 package com.himusharier.order_service.controller;
 
-import com.himusharier.order_service.common.Payment;
 import com.himusharier.order_service.common.TransactionRequest;
 import com.himusharier.order_service.common.TransactionResponse;
-import com.himusharier.order_service.entity.Order;
 import com.himusharier.order_service.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;

@@ -19,19 +19,22 @@ public class OrderService {
 
     public TransactionResponse saveOrder(TransactionRequest request) {
         String response = "";
-
         Order order = request.getOrder();
         Payment payment = request.getPayment();
         payment.setOrderId(order.getId());
         payment.setAmount(order.getPrice());
 
-        Payment paymentResponse = template.postForObject("http://localhost:9191/payment/do-payment", payment, Payment.class);
-        response = "success".equals(paymentResponse.getPaymentStatus())
+        //Payment paymentResponse = template.postForObject("http://localhost:9191/payment/do-payment", payment, Payment.class);
+        Payment paymentResponse = template.postForObject("http://payment-service/payment/do-payment", payment, Payment.class);
+        /*response = "success".equals(paymentResponse.getPaymentStatus())
+                ? "payment processing successful and order placed"
+                : "there is a failure in payment api, order added to cart";*/
+        response = paymentResponse.getPaymentStatus().equals("success")
                 ? "payment processing successful and order placed"
                 : "there is a failure in payment api, order added to cart";
 
         repository.save(order);
 
-        return new TransactionResponse(order, paymentResponse.getAmount(), paymentResponse.getTransactionId(), response);
+        return new TransactionResponse(order, paymentResponse.getAmount(), paymentResponse.getPaymentStatus(), paymentResponse.getTransactionId(), response);
     }
 }

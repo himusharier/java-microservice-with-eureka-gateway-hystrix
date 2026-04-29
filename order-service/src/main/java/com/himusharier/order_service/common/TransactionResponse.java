@@ -13,6 +13,7 @@ import lombok.Setter;
 public class TransactionResponse {
     private Order order;
     private double amount;
+    private String transactionStatus;
     private String transactionId;
     private String message;
 }
